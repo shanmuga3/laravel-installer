@@ -6,7 +6,7 @@
         {
             "name": "Shanmugarajan",
             "email": "shanmugarajan.33@gmail.com"
-        },
+        }
     ],
     "minimum-stability": "stable",
     "require": {
