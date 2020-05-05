@@ -84,7 +84,10 @@ return [
         'application' => [
             'tab1' => [
                 'name'      => 'Site Settings',
-                'table'     => 'site_settings',
+                'model' => '\App\Models\SiteSettings',
+                'type'      => 'check_column',
+                'check_column' => 'name',
+                'find_by_id'    => '',
                 'fields'    => [
                     ['key'   => 'site_name','label' => 'Site Name','value' => 'Site Name'],
                     ['key'   => 'admin_url','label' => 'Admin URL','value' => 'admin'],
@@ -98,7 +101,10 @@ return [
             ],
             'tab2' => [
                 'name' => 'Email Settings',
-                'table' => 'email_settings',
+                'model' => '\App\Models\EmailSettings',
+                'type'      => 'check_column',
+                'check_column' => 'name',
+                'find_by_id'    => '',
                 'fields'    => [
                     ['key'   => 'mail_driver','label' => 'Mail Driver','value' => 'smtp'],
                     ['key'   => 'mail_host','label' => 'Mail Host','value' => 'smtp.gmail.com'],
@@ -121,15 +127,20 @@ return [
                 ],
             ],
             'tab3' => [
-                'name' => 'Admin User',
-                'table' => 'admins',
+                'name'  => 'Admin User',
+                'model' => '\App\Models\Admin',
+                'type'      => 'find_by_id',
+                'check_column' => 'name',
+                'find_by_id'    => '1',
                 'fields'    => [
-                    ['key'   => 'admin_user_name','label' => 'User Name','value' => 'admin'],
-                    ['key'   => 'admin_password','label' => 'Password','value' => '','placeholder' => 'Password'],
+                    ['key'   => 'username','label' => 'User Name','value' => 'admin'],
+                    ['key'   => 'email','label' => 'Email','value' => ''],
+                    ['key'   => 'password','label' => 'Password','value' => '','placeholder' => 'Password'],
                 ],
                 'rules'     => [
-                    'admin_user_name' => 'required',
-                    'admin_password' => 'required',
+                    'username' => 'required',
+                    'email' => 'required',
+                    'password' => 'required',
                 ],
             ],
         ],

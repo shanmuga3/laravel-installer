@@ -128,6 +128,12 @@ return [
         'errors' => 'Unable to save the .env file, Please create it manually.',
     ],
 
+    'application' => [
+        'templateTitle' => 'Step 4 | Application Settings | Default Settings Wizard',
+        'title' => 'Default Settings Wizard',
+        'default_settings' => 'Default Settings',
+    ],
+
     'install' => 'Install',
 
     /*

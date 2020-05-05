@@ -18,7 +18,6 @@ use Illuminate\Routing\Controller;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\DB;
 use Shanmuga\LaravelInstaller\Helpers\EnvironmentManager;
-use Shanmuga\LaravelInstaller\Helpers\DatabaseManager;
 use Validator;
 
 class EnvironmentController extends Controller
@@ -29,17 +28,11 @@ class EnvironmentController extends Controller
     protected $EnvironmentManager;
 
     /**
-     * @var DataBaseManager
-     */
-    protected $DataBaseManager;
-
-    /**
      * @param EnvironmentManager $environmentManager
      */
-    public function __construct(EnvironmentManager $environmentManager,DataBaseManager $dataBaseManager)
+    public function __construct(EnvironmentManager $environmentManager)
     {
         $this->EnvironmentManager = $environmentManager;
-        $this->DataBaseManager = $dataBaseManager;
     }
 
     /**
@@ -50,9 +43,8 @@ class EnvironmentController extends Controller
     public function environmentWizard()
     {
         $envConfig = $this->EnvironmentManager->getEnvContent();
-        $envForm = $this->EnvironmentManager->getAppFormContent();
 
-        return view('vendor.installer.environment-wizard', compact('envConfig','envForm'));
+        return view('vendor.installer.environment-wizard', compact('envConfig'));
     }
 
     /**
@@ -67,15 +59,7 @@ class EnvironmentController extends Controller
         $rules = config('installer.environment.form.rules');
         $messages = [
             'environment_custom.required_if' => trans('installer_messages.environment.wizard.form.name_required'),
-        ];
-
-        $envForm = collect($this->EnvironmentManager->getAppFormContent());
-        $form_rules = array();
-        $envForm->each(function($form) use (&$form_rules) {
-            $rule = $form['rules'] ?? [];
-            $form_rules = array_merge($form_rules,$rule);
-        });
-        $rules = array_merge($rules,$form_rules);
+        ];       
 
         $request['app_debug'] = ($request->app_debug == 'true');
 
@@ -93,10 +77,8 @@ class EnvironmentController extends Controller
 
         $results = $this->EnvironmentManager->saveFileWizard($request);
 
-        $response = $this->database($request->all());
-
-        return redirect()->route('installer.final')
-                         ->with(['message' => $response]);
+        return $redirect->route('installer.application_settings')
+                        ->with(['results' => $results]);
     }
 
     /**
@@ -136,20 +118,5 @@ class EnvironmentController extends Controller
         } catch (Exception $e) {
             return false;
         }
-    }
-
-    /**
-     * Migrate and seed the database.
-     *
-     * @return \Illuminate\View\View
-     */
-    protected function database($request)
-    {
-        $response = $this->DataBaseManager->migrateAndSeed();
-        if($response['status'] == 'success') {
-            $envForm = $this->EnvironmentManager->getAppFormContent();
-        }
-
-        return $response;
     }
 }

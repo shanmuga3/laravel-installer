@@ -12,5 +12,9 @@ Route::group(['prefix' => 'install', 'namespace' => 'Shanmuga\LaravelInstaller\C
 
     Route::get('permissions', 'PermissionsController@permissions')->name('installer.permissions');
 
+    Route::get('application-settings', 'DatabaseController@applicationSettings')->name('installer.application_settings');
+    
+    Route::post('database', 'DatabaseController@database')->name('installer.database');
+
     Route::get('final', 'FinalController@finish')->name('installer.final');
 });

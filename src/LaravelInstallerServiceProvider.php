@@ -10,7 +10,7 @@
  * @author      Shanmugarajan
  */
 
-namespace Shanmuga\LaravelInstaller\Providers;
+namespace Shanmuga\LaravelInstaller;
 
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
