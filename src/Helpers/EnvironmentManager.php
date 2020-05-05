@@ -76,6 +76,18 @@ class EnvironmentManager
     }
 
     /**
+     * Get Dynamic form content from .env file.
+     *
+     * @param Request $input
+     * @return string
+     */
+    public function getAppFormContent()
+    {
+        $app_config = config('installer.environment.application');
+        return array_values($app_config);
+    }
+
+    /**
      * Save the edited content to the .env file.
      *
      * @param Request $input
@@ -105,7 +117,7 @@ class EnvironmentManager
         $results = trans('installer_messages.environment.success');
 
         $envFileData =
-        'APP_NAME=\''.$request->app_name."'\n".
+        'APP_NAME='.$request->app_name."\n".
         'APP_ENV='.$request->environment."\n".
         'APP_KEY='.'base64:'.base64_encode(Str::random(32))."\n".
         'APP_DEBUG='.$request->app_debug."\n".
@@ -120,19 +132,7 @@ class EnvironmentManager
         'BROADCAST_DRIVER='.$request->broadcast_driver."\n".
         'CACHE_DRIVER='.$request->cache_driver."\n".
         'SESSION_DRIVER='.$request->session_driver."\n".
-        'QUEUE_DRIVER='.$request->queue_driver."\n\n".
-        'REDIS_HOST='.$request->redis_hostname."\n".
-        'REDIS_PASSWORD='.$request->redis_password."\n".
-        'REDIS_PORT='.$request->redis_port."\n\n".
-        'MAIL_DRIVER='.$request->mail_driver."\n".
-        'MAIL_HOST='.$request->mail_host."\n".
-        'MAIL_PORT='.$request->mail_port."\n".
-        'MAIL_USERNAME='.$request->mail_username."\n".
-        'MAIL_PASSWORD='.$request->mail_password."\n".
-        'MAIL_ENCRYPTION='.$request->mail_encryption."\n\n".
-        'PUSHER_APP_ID='.$request->pusher_app_id."\n".
-        'PUSHER_APP_KEY='.$request->pusher_app_key."\n".
-        'PUSHER_APP_SECRET='.$request->pusher_app_secret;
+        'QUEUE_CONNECTION='.$request->queue_connection."\n\n";
 
         try {
             file_put_contents($this->envPath, $envFileData);

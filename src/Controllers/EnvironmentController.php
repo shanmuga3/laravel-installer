@@ -18,6 +18,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\DB;
 use Shanmuga\LaravelInstaller\Helpers\EnvironmentManager;
+use Shanmuga\LaravelInstaller\Helpers\DatabaseManager;
 use Validator;
 
 class EnvironmentController extends Controller
@@ -28,11 +29,17 @@ class EnvironmentController extends Controller
     protected $EnvironmentManager;
 
     /**
+     * @var DataBaseManager
+     */
+    protected $DataBaseManager;
+
+    /**
      * @param EnvironmentManager $environmentManager
      */
-    public function __construct(EnvironmentManager $environmentManager)
+    public function __construct(EnvironmentManager $environmentManager,DataBaseManager $dataBaseManager)
     {
         $this->EnvironmentManager = $environmentManager;
+        $this->DataBaseManager = $dataBaseManager;
     }
 
     /**
@@ -43,8 +50,9 @@ class EnvironmentController extends Controller
     public function environmentWizard()
     {
         $envConfig = $this->EnvironmentManager->getEnvContent();
+        $envForm = $this->EnvironmentManager->getAppFormContent();
 
-        return view('vendor.installer.environment-wizard', compact('envConfig'));
+        return view('vendor.installer.environment-wizard', compact('envConfig','envForm'));
     }
 
     /**
@@ -60,6 +68,14 @@ class EnvironmentController extends Controller
         $messages = [
             'environment_custom.required_if' => trans('installer_messages.environment.wizard.form.name_required'),
         ];
+
+        $envForm = collect($this->EnvironmentManager->getAppFormContent());
+        $form_rules = array();
+        $envForm->each(function($form) use (&$form_rules) {
+            $rule = $form['rules'] ?? [];
+            $form_rules = array_merge($form_rules,$rule);
+        });
+        $rules = array_merge($rules,$form_rules);
 
         $request['app_debug'] = ($request->app_debug == 'true');
 
@@ -77,8 +93,10 @@ class EnvironmentController extends Controller
 
         $results = $this->EnvironmentManager->saveFileWizard($request);
 
-        return $redirect->route('installer.database')
-                        ->with(['results' => $results]);
+        $response = $this->database($request->all());
+
+        return redirect()->route('installer.final')
+                         ->with(['message' => $response]);
     }
 
     /**
@@ -118,5 +136,20 @@ class EnvironmentController extends Controller
         } catch (Exception $e) {
             return false;
         }
+    }
+
+    /**
+     * Migrate and seed the database.
+     *
+     * @return \Illuminate\View\View
+     */
+    protected function database($request)
+    {
+        $response = $this->DataBaseManager->migrateAndSeed();
+        if($response['status'] == 'success') {
+            $envForm = $this->EnvironmentManager->getAppFormContent();
+        }
+
+        return $response;
     }
 }

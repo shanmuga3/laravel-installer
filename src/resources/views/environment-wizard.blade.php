@@ -309,6 +309,33 @@
                         </div>
                     </div>
                 </div>
+
+                @foreach($envForm as $key => $formData)
+                <div class="block">
+                    <input type="radio" name="appSettingsTabs" id="appSettingsTab{{ $key }}" value="null"/>
+                    <label for="appSettingsTab{{ $key }}">
+                        <span>
+                            {{ $formData['name'] }}
+                        </span>
+                    </label>
+                    <div class="info">
+                        @foreach($formData['fields'] as $field)
+                            <div class="form-group {{ $errors->has($field['key']) ? ' has-error ' : '' }}">
+                                <label for="{{ $field['key'] }}">
+                                    {{ $field['label'] }}
+                                </label>
+                                <input type="text" name="{{ $field['key'] }}" id="{{ $field['key'] }}" value="{{ $field['value'] }}" placeholder="{{ $field['placeholder'] ?? '' }}" />
+                                @if ($errors->has($field['key']))
+                                <span class="error-block">
+                                    <i class="fa fa-fw fa-exclamation-triangle" aria-hidden="true"></i>
+                                    {{ $errors->first($field['key']) }}
+                                </span>
+                                @endif
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+                @endforeach
                 
                 <div class="buttons">
                     <button class="button" type="submit">

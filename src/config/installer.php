@@ -81,6 +81,58 @@ return [
                 'queue_connection'      => 'required|string|max:50',
             ],
         ],
+        'application' => [
+            'tab1' => [
+                'name'      => 'Site Settings',
+                'table'     => 'site_settings',
+                'fields'    => [
+                    ['key'   => 'site_name','label' => 'Site Name','value' => 'Site Name'],
+                    ['key'   => 'admin_url','label' => 'Admin URL','value' => 'admin'],
+                    ['key'   => 'timezone','label' => 'Timezone','value' => 'UTC'],
+                ],
+                'rules'     => [
+                    'site_name' => 'required',
+                    'admin_url' => 'required',
+                    'timezone'  => 'required',
+                ],
+            ],
+            'tab2' => [
+                'name' => 'Email Settings',
+                'table' => 'email_settings',
+                'fields'    => [
+                    ['key'   => 'mail_driver','label' => 'Mail Driver','value' => 'smtp'],
+                    ['key'   => 'mail_host','label' => 'Mail Host','value' => 'smtp.gmail.com'],
+                    ['key'   => 'mail_port','label' => 'Mail Port','value' => '587'],
+                    ['key'   => 'mail_from_address','label' => 'From Address','value' => ''],
+                    ['key'   => 'mail_from_name','label' => 'From Name','value' => ''],
+                    ['key'   => 'mail_encryption','label' => 'Encryption','value' => 'tls'],
+                    ['key'   => 'mail_username','label' => 'Mail Username','value' => ''],
+                    ['key'   => 'mail_password','label' => 'Mail Password','value' => ''],
+                ],
+                'rules'     => [
+                    'mail_driver' => 'required',
+                    'mail_host' => 'required',
+                    'mail_port'  => 'required',
+                    'mail_from_address' => 'required',
+                    'mail_from_name' => 'required',
+                    'mail_encryption' => 'required',
+                    'mail_username' => 'required',
+                    'mail_password'  => 'required',
+                ],
+            ],
+            'tab3' => [
+                'name' => 'Admin User',
+                'table' => 'admins',
+                'fields'    => [
+                    ['key'   => 'admin_user_name','label' => 'User Name','value' => 'admin'],
+                    ['key'   => 'admin_password','label' => 'Password','value' => '','placeholder' => 'Password'],
+                ],
+                'rules'     => [
+                    'admin_user_name' => 'required',
+                    'admin_password' => 'required',
+                ],
+            ],
+        ],
     ],
 
     /*

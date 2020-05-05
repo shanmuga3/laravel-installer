@@ -55,16 +55,9 @@ return [
      *
      */
     'environment' => [
-        'menu' => [
-            'templateTitle' => 'Step 3 | Environment Settings',
-            'title' => 'Environment Settings',
-            'desc' => 'Please select how you want to configure the apps <code>.env</code> file.',
-            'wizard-button' => 'Form Wizard Setup',
-            'classic-button' => 'Classic Text Editor',
-        ],
         'wizard' => [
             'templateTitle' => 'Step 3 | Environment Settings | Guided Wizard',
-            'title' => 'Guided <code>.env</code> Wizard',
+            'title' => 'Guided Setup Wizard',
             'tabs' => [
                 'environment' => 'Environment',
                 'database' => 'Database',
@@ -123,32 +116,6 @@ return [
                     'session_placeholder' => 'Session Driver',
                     'queue_label' => 'Queue Connection',
                     'queue_placeholder' => 'Queue Connection',
-                    'redis_label' => 'Redis Driver',
-                    'redis_host' => 'Redis Host',
-                    'redis_password' => 'Redis Password',
-                    'redis_port' => 'Redis Port',
-
-                    'mail_label' => 'Mail',
-                    'mail_driver_label' => 'Mail Driver',
-                    'mail_driver_placeholder' => 'Mail Driver',
-                    'mail_host_label' => 'Mail Host',
-                    'mail_host_placeholder' => 'Mail Host',
-                    'mail_port_label' => 'Mail Port',
-                    'mail_port_placeholder' => 'Mail Port',
-                    'mail_username_label' => 'Mail Username',
-                    'mail_username_placeholder' => 'Mail Username',
-                    'mail_password_label' => 'Mail Password',
-                    'mail_password_placeholder' => 'Mail Password',
-                    'mail_encryption_label' => 'Mail Encryption',
-                    'mail_encryption_placeholder' => 'Mail Encryption',
-
-                    'pusher_label' => 'Pusher',
-                    'pusher_app_id_label' => 'Pusher App Id',
-                    'pusher_app_id_palceholder' => 'Pusher App Id',
-                    'pusher_app_key_label' => 'Pusher App Key',
-                    'pusher_app_key_palceholder' => 'Pusher App Key',
-                    'pusher_app_secret_label' => 'Pusher App Secret',
-                    'pusher_app_secret_palceholder' => 'Pusher App Secret',
                 ],
                 'buttons' => [
                     'setup_database' => 'Setup Database',
@@ -156,13 +123,6 @@ return [
                     'install' => 'Install',
                 ],
             ],
-        ],
-        'classic' => [
-            'templateTitle' => 'Step 3 | Environment Settings | Classic Editor',
-            'title' => 'Classic Environment Editor',
-            'save' => 'Save .env',
-            'back' => 'Use Form Wizard',
-            'install' => 'Save and Install',
         ],
         'success' => 'Your .env file settings have been saved.',
         'errors' => 'Unable to save the .env file, Please create it manually.',
