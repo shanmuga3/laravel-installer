@@ -66,11 +66,11 @@ class EnvironmentController extends Controller
         $validator = Validator::make($request->all(), $rules, $messages);
 
         if ($validator->fails()) {
-            return $redirect->route('installer.environmentWizard')->withInput()->withErrors($validator->errors());
+            return $redirect->route('installer.environment')->withInput()->withErrors($validator->errors());
         }
 
         if (! $this->checkDatabaseConnection($request)) {
-            return $redirect->route('installer.environmentWizard')->withInput()->withErrors([
+            return $redirect->route('installer.environment')->withInput()->withErrors([
                 'database_connection' => trans('installer_messages.environment.wizard.form.db_connection_failed'),
             ]);
         }
