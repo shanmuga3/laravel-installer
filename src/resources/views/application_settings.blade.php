@@ -16,7 +16,7 @@
         
         <form method="post" action="{{ route('installer.database') }}" class="tabs-wrap">
             <div class="tab active" id="tab1content">
-                
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 @foreach($envForm as $key => $formData)
                 <div class="block">
                     <input type="radio" name="appSettingsTabs" id="appSettingsTab{{ $key }}" value="null" {{ ($key == '0') ? 'checked' :'' }} />
