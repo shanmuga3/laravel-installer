@@ -1,4 +1,4 @@
-# Laravel Web Installer (Laravel 7 Package)
+# Laravel Web Installer (Laravel 9 Package)
 Install Laravel Application with Configuration on either database or env
 
 ## License
